@@ -1,10 +1,8 @@
 #!/bin/bash
 for i in {1..100}; do
 
-useradd -d -m /var/www/html/user$i
+useradd  -m -d /var/www/html/user$i user$i 
 echo "user$i:12345" | chpasswd
-
-cd /etc/apache2/sites-available
 
 sed "s,/html,/html/user$i \n ServerName www$i.smkbisa.net," 000-default.conf >> user$i.conf
 sed -e "s,/html,/html/user$i \n ServerName www$i.smkbisa.net \n SSLCertificateFile /crt/out.pem \n SSLCertificateKeyFile /crt/out.key," -e "s,SSLCerti,#SSLDISABLED," default-ssl.conf >> user$i-ssl.conf
